@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的第一个 python 网页</title>
+</head>
+<body>
+<h1>Hello World!</h1>
+my first python site page
+<br>
+<h1>变量的使用</h1>
+{{title}}
+
+<h1>循环 list（testList）</h1>
+{% for i in testList %}
+{{ i }}
+{% endfor %}
+
+<h1>dict 的使用</h1>
+<h4>直接使用:</h4>
+PHP:{{ testDict.php}}
+<br>
+Python:{{ testDict.python}}
+<h4>遍历</h4>
+{% for key, val in testDict.items %}
+    {{ key }} : {{ val }}<br>
+{% endfor %}
+
+<h1>条件判断</h1>
+<h4>tips：forloop.last 这个变量，如果是最后一项其为真，否则为假</h4>
+{% for item in tList %}
+    {{ item }}{% if not forloop.last %},{% endif %}
+{% endfor %}
+<h4>判断为空（循环不存在的 fooList）</h4>
+{% for item in fooList %}
+    {{item}}
+{% empty %}
+    sorry,list is empty
+{% endfor %}
+
+<h1>模板上得到视图对应网址</h1>
+{% url 'add2' 4 5 %}
+
+<h4>as 语句将内容取别名(相当于定义一个变量），多次使用（但视图名称到网址转换只进行了一次）)</h4>
+{% url 'add2' 4 5 as add2 %}
+<a href="{{ add2 }}">链接到：{{ add2 }}</a>
+
+<h1>模板中的逻辑操作</h1>
+<h4>==, !=, >=, <=, >, < </h4>
+{% if tVar >= 90 %}
+成绩优秀
+{% elif tVar >= 80 %}
+成绩良好
+{% elif tVar >= 70 %}
+成绩一般
+{% elif tVar >= 60 %}
+需要努力
+{% else %}
+不及格啊，小伙子还需努力
+{% endif %}
+
+<h4>and, or, not, in, not in</h4>
+{% if tVar <= 100 and tVar >= 0 %}
+tVar 在0到100之间
+{% else %}
+数值不在范围之内！
+{% endif %}
+
+<h4>判断 'php' 在不在列表变量 List(testList) 中</h4>
+{% if 'php' in testList %}
+php 在 testList 中
+{% endif %}
+
+<h1>在模板中 获取当前网址，当前用户等</h1>
+<h5>tpis:如果不是在 views.py 中用的 render 函数，是 render_to_response 的话，需要将 request 加入到 上下文渲染器（修改 settings.py 中 TEMPLATES）</h5>
+<h4>获取当前用户</h4>
+{% if request.user.is_authenticated %}
+    {{ request.user.username }}，您好！
+{% else %}
+    请先登陆
+{% endif %}
+
+<h4>获取当前网址</h4>
+{{ request.path }}
+
+<h4>获取当前 GET 参数</h4>
+{{ request.GET.urlencode }}
+
+<h4>综合例子</h4>
+<a href="{{ request.path }}?{{ request.GET.urlencode }}&test=1">当前网址加参数 delete</a>
+
+<h1>操作数据库</h1>
+<h5>插入1</h5>
+{{ PS1.id }}
+{{ PS1.name }}
+{{ PS1.age }}
+
+<h5>插入2</h5>
+{{ PS2.id }}
+{{ PS2.name }}
+{{ PS2.age }}
+
+<h5>插入3</h5>
+{{ PS3.id }}
+{{ PS3.name }}
+{{ PS3.age }}
+
+<h5>插入4，这样使用 PS4.0，PS4.1</h5>
+{{ PS4.0.id }} - {{ PS4.0.name }} - {{ PS4.0.age }}
+{{ PS4.1 }}
+
+<h5>获取1</h5>
+{% for p in get1 %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
+
+<h5>获取2</h5>
+{% for p in get2 %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
+
+<h5>获取3，get精确查找</h5>
+{{ get3.id}} - {{ get3.name }} - {{ get3.age }}
+
+<h5>获取4</h5>
+<h6>名称包含 jam 的</h6>
+{% for p in get4 %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
+<h6>名称是以 0 结尾的</h6>
+{% for p in get4_1 %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
+
+<h5>获取5</h5>
+<h6>排除名称中包含 11 的用户</h6>
+{% for p in get5 %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
+<h6>找出名称含有 jam , 但是排除年龄是20的</h6>
+{% for p in get5_1 %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
+
+
+
+<div style="height:300px;"></div>
+</body>
+</html>
