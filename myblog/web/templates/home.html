@@ -89,59 +89,71 @@ php 在 testList 中
 <a href="{{ request.path }}?{{ request.GET.urlencode }}&test=1">当前网址加参数 delete</a>
 
 <h1>操作数据库</h1>
-<h5>插入1</h5>
+<h4>-------插入1-------</h4>
 {{ PS1.id }}
 {{ PS1.name }}
 {{ PS1.age }}
 
-<h5>插入2</h5>
+<h4>插入2</h4>
 {{ PS2.id }}
 {{ PS2.name }}
 {{ PS2.age }}
 
-<h5>插入3</h5>
+<h4>插入3</h4>
 {{ PS3.id }}
 {{ PS3.name }}
 {{ PS3.age }}
 
-<h5>插入4，这样使用 PS4.0，PS4.1</h5>
+<h4>插入4，这样使用 PS4.0，PS4.1</h4>
 {{ PS4.0.id }} - {{ PS4.0.name }} - {{ PS4.0.age }}
 {{ PS4.1 }}
 
-<h5>获取1</h5>
+<h4>-------获取1-------</h4>
 {% for p in get1 %}
     {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
 {% endfor %}
 
-<h5>获取2</h5>
+<h4>获取2</h4>
 {% for p in get2 %}
     {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
 {% endfor %}
 
-<h5>获取3，get精确查找</h5>
+<h4>获取3，get精确查找</h4>
 {{ get3.id}} - {{ get3.name }} - {{ get3.age }}
 
-<h5>获取4</h5>
-<h6>名称包含 jam 的</h6>
+<h4>获取4</h4>
+<h5>名称包含 jam 的</h5>
 {% for p in get4 %}
     {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
 {% endfor %}
-<h6>名称是以 0 结尾的</h6>
+<h5>名称是以 0 结尾的</h5>
 {% for p in get4_1 %}
     {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
 {% endfor %}
 
-<h5>获取5</h5>
-<h6>排除名称中包含 11 的用户</h6>
+<h4>获取5</h4>
+<h5>排除名称中包含 11 的用户</h5>
 {% for p in get5 %}
     {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
 {% endfor %}
-<h6>找出名称含有 jam , 但是排除年龄是20的</h6>
+<h4>找出名称含有 jam , 但是排除年龄是20的</h4>
 {% for p in get5_1 %}
     {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
 {% endfor %}
 
+<h4>-------排序-------</h4>
+{% for p in order1 %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
+<h5>倒序</h5>
+{% for p in order2 %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
 
+<h4>-------数据的合并和去重-------</h4>
+{% for p in res %}
+    {{ p.id }} - {{ p.name }} - {{ p.age }} <br>
+{% endfor %}
 
 <div style="height:300px;"></div>
 </body>

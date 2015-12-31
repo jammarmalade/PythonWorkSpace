@@ -48,6 +48,7 @@ def redirect_add2(request, a, b):
 # render 分配变量给模板
 from django.shortcuts import render
 from web.models import Person
+import itertools
 def home(request):
 	str = u'This is my site home page'
 	# for 循环和 list 列表的使用
@@ -58,7 +59,7 @@ def home(request):
 	tList = range(100)
 	# 变量，逻辑操作
 	tVar = 24
-	# -----------------操作数据库---------------
+	# -----------------操作数据库---------------https://docs.djangoproject.com/en/dev/ref/model
 	# ------------------插入-------------------
 	'''
 	# 插入 ，返回一个 dict , PS1.id, PS1.name, PS1.age
@@ -80,7 +81,9 @@ def home(request):
 	# ------------------获取-------------------
 	# 第一种获取，获取所有，返回 类似 php 的二维数组 字段=>值
 	get1 = Person.objects.all()
-	# 第二种获取，只是在第一种上面做了切片 [ 从那里开始 : 到哪里结束 : 步长]
+	# 第二种获取，只是在第一种上面做了切片 [ 从那里开始 : 到哪里结束 : 步长],不支持负向索引，若要用负向索引，如下:
+	# Person.objects.all().reverse()[:2] # 最后两条
+	# Person.objects.all().reverse()[0] # 最后一条
 	get2 = Person.objects.all()[:2]
 	# 第三种获取，get 用于获取单条数据，精确查找
 	get3 = Person.objects.get(name='jam00')
@@ -90,7 +93,20 @@ def home(request):
 	# 第五种获取，排除符合某些条件的数据
 	get5 = Person.objects.exclude(name__contains="11")      # 排除名称中包含 11 的用户
 	get5_1 = Person.objects.filter(name__contains="jam").exclude(age=20) # 找出名称含有 jam , 但是排除年龄是20的
-	
+	# ------------------排序-------------------
+	order1 = Person.objects.all().order_by('age')
+	order2 = Person.objects.all().order_by('-age')          # - 为倒序
+	# --------------数据合并和去重-------------
+	res1 = Person.objects.all()[:3]                          # 切片后不能进行 这样的 合并  res1 | res2
+	# res1 = Person.objects.all()
+	res2 = Person.objects.filter(age__gt=21)                 # 年龄大于 21 的
+	print(res1)
+	print(res2)
+	# res = res1 | res2
+	# res = res.distinct()                                     # distinct 去重，用 | 合并的数据已经去重了，保险起见可在执行一次，distinct 是 django 的方法
+	res = itertools.chain(res1, res2)                       # 切片后用这种方式合并,但是不会去重,要引入 itertools
+	res = list(set(res))                                    # 去重，转为 set()集合为无序不重复的集合， 再转为 list
+
 
 	return render(request, 'home.html',{
 		'title':str,
@@ -109,6 +125,9 @@ def home(request):
 		'get4_1':get4_1,
 		'get5':get5,
 		'get5_1':get5_1,
+		'order1':order1,
+		'order2':order2,
+		'res':res,
 	})
 
 
