@@ -9,7 +9,7 @@ def index(request):
 def add(request):
 	# 获取 get 参数 a ,没有就默认为 0
 	a = request.GET.get('a',0)
-	# 另一种获取方式，最好是
+	# 另一种获取方式，最好是用上面这种
 	b = request.GET['b']
 	c = int(a) + int(b)
 	return HttpResponse(str(c))
@@ -132,7 +132,10 @@ def home(request):
 
 
 
-
+'''
+cd myblog
+python manage.py runserver 0.0.0.0:8000
+'''
 
 
 

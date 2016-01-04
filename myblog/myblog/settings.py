@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# __file__ 获取当前文件的路径 ,类似 php 中的 __dir__
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -23,8 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'mq8xyqgw4kmw%=jzg1n+in27a+^sk$ps(oaw3#c67wnfe%&*5*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# 线上改为 false
 DEBUG = True
 
+# 允许你设置哪些域名可以访问,即使在Apache中绑定了，这里不允许的话，也是不能访问的
+# 当 DEBUG=False 时，这个为必填项，如果不想输入，可以用 ALLOW_HOSTS = ['*'] 来允许所有的。
 ALLOWED_HOSTS = []
 
 
@@ -57,7 +61,11 @@ ROOT_URLCONF = 'myblog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 有时候有一些模板不是属于app的，比如 baidutongji.html, share.html等，
+        'DIRS': [
+            # os.path.join(BASE_DIR,'templates').replace('\\', '/'),
+            # os.path.join(BASE_DIR,'templates2').replace('\\', '/'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,5 +138,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
+# 静态资源所在目录
+# 把静态文件放在 APP 中的 static 目录下，部署时用 python manage.py collectstatic 就可以把静态文件收集到 STATIC_ROOT 目录
 STATIC_URL = '/static/'
