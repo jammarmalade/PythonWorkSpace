@@ -140,4 +140,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 # 静态资源所在目录
 # 把静态文件放在 APP 中的 static 目录下，部署时用 python manage.py collectstatic 就可以把静态文件收集到 STATIC_ROOT 目录
+# http://127.0.0.1:8000/static/t.jpg
 STATIC_URL = '/static/'
+# 指定所有 app 共用的静态文件，比如 jquery.js 等,http://127.0.0.1:8000/static/js/jquery.min.js
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "common_static"),
+)

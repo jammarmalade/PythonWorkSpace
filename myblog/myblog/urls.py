@@ -35,3 +35,12 @@ urlpatterns = [
     # home 主页
     url(r'^home/', web_views.home, name='home'),
 ]
+'''
+为静态文件分配多个不同的网址时
+import os
+from django.conf.urls.static import static
+from django.conf import settings
+if settings.DEBUG:
+    media_root = os.path.join(settings.BASE_DIR,'media2')
+    urlpatterns += static('/media2/', document_root=media_root)
+'''
